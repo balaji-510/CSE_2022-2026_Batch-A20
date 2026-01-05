@@ -1,0 +1,394 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Complete Registration | CodeNest</title>
+
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Inter", Arial, sans-serif;
+    }
+
+    body {
+        min-height: 100vh;
+        background: linear-gradient(180deg, #f8fbff, #eef3ff);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #0f172a;
+        position: relative;
+    }
+
+    /* BACK BUTTON */
+    .back-btn {
+        position: absolute;
+        top: 25px;
+        left: 25px;
+        text-decoration: none;
+        font-size: 14px;
+        color: #4f6bff;
+        font-weight: 500;
+    }
+
+    .back-btn:hover {
+        color: #1e40af;
+    }
+
+    .form-container {
+        width: 460px;
+        background: linear-gradient(
+            180deg,
+            rgba(255,255,255,0.95),
+            rgba(240,245,255,0.95)
+        );
+        padding: 40px;
+        border-radius: 18px;
+        box-shadow: 0 15px 40px rgba(79,107,255,0.25);
+        animation: fadeUp 0.6s ease forwards;
+    }
+
+    h2 {
+        text-align: center;
+        margin-bottom: 6px;
+    }
+
+    .subtitle {
+        text-align: center;
+        font-size: 14px;
+        color: #475569;
+        margin-bottom: 25px;
+    }
+
+    label {
+        font-size: 13px;
+        font-weight: 500;
+    }
+
+    input {
+        width: 100%;
+        padding: 12px;
+        margin-top: 6px;
+        margin-bottom: 14px;
+        border-radius: 8px;
+        border: 1px solid #c7d2fe;
+        font-size: 14px;
+        outline: none;
+    }
+
+    input:focus {
+        border-color: #4f6bff;
+    }
+
+    .inline {
+        display: flex;
+        gap: 10px;
+    }
+
+    .inline input {
+        flex: 1;
+    }
+
+    .inline button {
+        padding: 12px;
+        border-radius: 8px;
+        border: none;
+        background: #4f6bff;
+        color: white;
+        cursor: pointer;
+        font-size: 13px;
+    }
+
+    .verify-section {
+        display: none;
+    }
+
+    .student-only {
+        display: none;
+    }
+
+    .add-btn {
+        background: none;
+        border: none;
+        color: #4f6bff;
+        font-size: 13px;
+        cursor: pointer;
+        margin-bottom: 15px;
+    }
+
+    .hint {
+        font-size: 12px;
+        color: #475569;
+        margin-bottom: 10px;
+    }
+
+    button.submit-btn {
+        width: 100%;
+        margin-top: 12px;
+        padding: 13px;
+        background: #4f6bff;
+        color: white;
+        border: none;
+        border-radius: 10px;
+        font-size: 15px;
+        cursor: pointer;
+        box-shadow: 0 10px 25px rgba(79,107,255,0.35);
+    }
+
+    @keyframes fadeUp {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+</style>
+
+<script>
+const role = sessionStorage.getItem("role");
+let emailVerified = false;
+
+function showVerification() {
+    const email = document.querySelector("input[type='email']").value;
+
+    if (!email) {
+        alert("Please enter email first");
+        return;
+    }
+
+    fetch("/send-otp/", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+            "X-CSRFToken": getCookie("csrftoken")
+        },
+        body: `email=${email}`
+    })
+    .then(() => {
+        document.getElementById("verifyBox").style.display = "block";
+        alert("OTP sent to your email");
+    });
+}
+
+function verifyCode() {
+    const email = document.getElementById("emailInput").value;
+    const otp = document.querySelector("#verifyBox input").value;
+
+    fetch("/verify-otp/", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+            "X-CSRFToken": getCookie("csrftoken")
+        },
+        body: `email=${email}&otp=${otp}`
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (data.message) {
+            emailVerified = true;
+
+            // Lock email field
+            document.getElementById("emailInput").disabled = true;
+            document.getElementById("verifyBtn").disabled = true;
+
+            // Hide OTP box
+            document.getElementById("verifyBox").style.display = "none";
+
+            // Show verified badge
+            document.getElementById("verifiedStatus").style.display = "block";
+        } else {
+            alert(data.error);
+        }
+    });
+}
+
+
+function resendOTP() {
+    const email = document.querySelector("input[type='email']").value;
+
+    fetch("/resend-otp/", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+            "X-CSRFToken": getCookie("csrftoken")
+        },
+        body: `email=${email}`
+    })
+    .then(() => alert("New OTP sent"));
+}
+
+function addPlatform() {
+    const container = document.getElementById("platformContainer");
+    const input = document.createElement("input");
+    input.type = "url";
+    input.placeholder = "https://platform.com/username";
+    container.appendChild(input);
+}
+
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let c of cookies) {
+            c = c.trim();
+            if (c.startsWith(name + '=')) {
+                cookieValue = decodeURIComponent(c.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+
+function handleSubmit() {
+    if (!emailVerified) {
+        alert("Please verify your email first");
+        return;
+    }
+
+    const fullName = document.getElementById("fullName").value.trim();
+    const email = document.getElementById("emailInput").value.trim();
+    const pwd = document.getElementById("password").value;
+    const cpwd = document.getElementById("confirmPassword").value;
+
+    if (!fullName || !email || !pwd || !cpwd) {
+        alert("Please fill all mandatory fields");
+        return;
+    }
+
+    if (pwd !== cpwd) {
+        alert("Passwords do not match");
+        return;
+    }
+
+    // ✅ MANDATORY coding platforms for student
+    let platforms = [];
+    if (role === "student") {
+        const inputs = document.querySelectorAll("#platformContainer input");
+        inputs.forEach(input => {
+            if (input.value.trim()) {
+                platforms.push(input.value.trim());
+            }
+        });
+
+        if (platforms.length === 0) {
+            alert("Please add at least one coding platform");
+            return;
+        }
+    }
+
+    // Send data to backend
+    fetch("/register-user/", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "X-CSRFToken": getCookie("csrftoken")
+        },
+        body: JSON.stringify({
+            full_name: fullName,
+            email: email,
+            password: pwd,
+            role: role,
+            platforms: platforms
+        })
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (data.status === "success") {
+            if (role === "student") {
+                window.location.href = "/student-dashboard/";
+            } else {
+                window.location.href = "/faculty-dashboard/";
+            }
+        } else {
+            alert(data.error);
+        }
+    });
+}
+
+
+window.onload = function () {
+    if (role === "student") {
+        document.getElementById("studentFields").style.display = "block";
+    }
+};
+</script>
+
+
+</head>
+
+<body>
+
+<a href="/select-role/" class="back-btn">← Back</a>
+
+<div class="form-container">
+    <h2>Complete Registration</h2>
+    <div class="subtitle">Fill your details to continue</div>
+
+    <form>
+        <label>Full Name</label>
+        <input type="text" id="fullName" placeholder="Enter your full name" required>
+
+
+        <label>Email <span style="color:red">*</span></label>
+<div class="inline">
+    <input type="email" id="emailInput" placeholder="Enter your email" required>
+    <button type="button" id="verifyBtn" onclick="showVerification()">Verify</button>
+</div>
+
+<div id="verifiedStatus" style="display:none; color:#2563eb; font-size:13px; margin-bottom:10px;">
+    ✔ Email Verified
+</div>
+
+
+        <div id="verifyBox" class="verify-section">
+            <label>Verification Code</label>
+            <div class="inline">
+                <input type="text" placeholder="Enter code">
+                <button type="button" onclick="verifyCode()">Verify Code</button>
+            </div>
+            <button type="button" class="add-btn" onclick="resendOTP()">
+                Resend Code
+            </button>
+
+        </div>
+
+        <label>Password</label>
+        <input type="password" id="password" placeholder="Create a strong password" required>
+
+        <div class="hint">
+            Must contain uppercase, lowercase, special character, 8–10 characters.
+        </div>
+
+        <label>Confirm Password</label>
+        <input type="password" id="confirmPassword" placeholder="Re-enter password" required>
+
+
+        <!-- STUDENT ONLY -->
+        <div id="studentFields" class="student-only">
+            <label>Coding Platform URLs</label>
+
+            <div id="platformContainer">
+                <input type="url" placeholder="https://leetcode.com/username">
+                <input type="url" placeholder="https://www.codechef.com/users/username">
+                <input type="url" placeholder="https://www.hackerrank.com/username">
+            </div>
+
+            <button type="button" class="add-btn" onclick="addPlatform()">+ Add another platform</button>
+        </div>
+
+        <button type="button" class="submit-btn" onclick="handleSubmit()">
+Submit & Continue
+</button>
+
+    </form>
+</div>
+
+</body>
+</html>

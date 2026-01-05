@@ -1,0 +1,350 @@
+<!--<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Login | CodeNest</title>
+
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Inter", Arial, sans-serif;
+    }
+
+    body {
+        min-height: 100vh;
+        background: linear-gradient(180deg, #f8fbff, #eef3ff);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #0f172a;
+    }
+
+    .login-container {
+        background: linear-gradient(
+            180deg,
+            rgba(255, 255, 255, 0.95),
+            rgba(240, 245, 255, 0.95)
+        );
+        width: 380px;
+        padding: 40px 35px;
+        border-radius: 18px;
+        box-shadow: 0 15px 40px rgba(79,107,255,0.25);
+        animation: fadeUp 0.8s ease forwards;
+    }
+
+    h2 {
+        text-align: center;
+        margin-bottom: 10px;
+    }
+
+    .subtitle {
+        text-align: center;
+        font-size: 14px;
+        color: #475569;
+        margin-bottom: 30px;
+    }
+
+    label {
+        font-size: 13px;
+        font-weight: 500;
+    }
+
+    input {
+        width: 100%;
+        padding: 12px;
+        margin-top: 6px;
+        margin-bottom: 18px;
+        border-radius: 8px;
+        border: 1px solid #c7d2fe;
+        outline: none;
+        font-size: 14px;
+    }
+
+    input:focus {
+        border-color: #4f6bff;
+    }
+
+    button {
+        width: 100%;
+        background: #4f6bff;
+        color: white;
+        border: none;
+        padding: 13px;
+        border-radius: 10px;
+        font-size: 15px;
+        cursor: pointer;
+        box-shadow: 0 10px 25px rgba(79,107,255,0.35);
+        transition: all 0.3s ease;
+    }
+
+    button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 15px 35px rgba(79,107,255,0.45);
+    }
+
+    .footer-text {
+        text-align: center;
+        font-size: 13px;
+        margin-top: 22px;
+        color: #475569;
+    }
+
+    .footer-text a {
+        color: #4f6bff;
+        text-decoration: none;
+        font-weight: 500;
+    }
+
+    @keyframes fadeUp {
+        from {
+            opacity: 0;
+            transform: translateY(25px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+</style>
+</head>
+
+<body>
+
+<div class="login-container">
+    <h2>Welcome Back</h2>
+    <div class="subtitle">Login to continue using CodeNest</div>
+
+    <form>
+        <label>Email / Username</label>
+        <input type="text" placeholder="Enter your email or username">
+
+        <label>Password</label>
+        <input type="password" placeholder="Enter your password">
+
+        <button type="submit">Login</button>
+    </form>
+
+    <div class="footer-text">
+        Don’t have an account?
+        <a href="/signup/">Sign up</a>
+    </div>
+</div>
+
+</body>
+</html>
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Login | CodeNest</title>
+
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Inter", Arial, sans-serif;
+    }
+
+    body {
+        min-height: 100vh;
+        background: linear-gradient(180deg, #f8fbff, #eef3ff);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #0f172a;
+        position: relative;
+    }
+
+    /* -------- BACK BUTTON -------- */
+    .back-btn {
+        position: absolute;
+        top: 25px;
+        left: 25px;
+        text-decoration: none;
+        font-size: 14px;
+        color: #4f6bff;
+        font-weight: 500;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        transition: all 0.3s ease;
+    }
+
+    .back-btn:hover {
+        transform: translateX(-4px);
+        color: #1e40af;
+    }
+
+    /* -------- LOGIN CARD -------- */
+    .login-container {
+        background: linear-gradient(
+            180deg,
+            rgba(255, 255, 255, 0.95),
+            rgba(240, 245, 255, 0.95)
+        );
+        width: 380px;
+        padding: 40px 35px;
+        border-radius: 18px;
+        box-shadow: 0 15px 40px rgba(79,107,255,0.25);
+        animation: fadeUp 0.8s ease forwards;
+    }
+
+    h2 {
+        text-align: center;
+        margin-bottom: 10px;
+    }
+
+    .subtitle {
+        text-align: center;
+        font-size: 14px;
+        color: #475569;
+        margin-bottom: 30px;
+    }
+
+    label {
+        font-size: 13px;
+        font-weight: 500;
+    }
+
+    input {
+        width: 100%;
+        padding: 12px;
+        margin-top: 6px;
+        margin-bottom: 18px;
+        border-radius: 8px;
+        border: 1px solid #c7d2fe;
+        outline: none;
+        font-size: 14px;
+    }
+
+    input:focus {
+        border-color: #4f6bff;
+    }
+
+    button {
+        width: 100%;
+        background: #4f6bff;
+        color: white;
+        border: none;
+        padding: 13px;
+        border-radius: 10px;
+        font-size: 15px;
+        cursor: pointer;
+        box-shadow: 0 10px 25px rgba(79,107,255,0.35);
+        transition: all 0.3s ease;
+    }
+
+    button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 15px 35px rgba(79,107,255,0.45);
+    }
+
+    .footer-text {
+        text-align: center;
+        font-size: 13px;
+        margin-top: 22px;
+        color: #475569;
+    }
+
+    .footer-text a {
+        color: #4f6bff;
+        text-decoration: none;
+        font-weight: 500;
+    }
+
+    @keyframes fadeUp {
+        from {
+            opacity: 0;
+            transform: translateY(25px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+</style>
+<script>
+function handleLogin() {
+    const email = document.getElementById("loginEmail").value;
+    const password = document.getElementById("loginPassword").value;
+
+    fetch("/login-user/", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+            "X-CSRFToken": getCookie("csrftoken")
+        },
+        body: `email=${email}&password=${password}`
+    })
+    .then(res => res.json())
+    .then(data => {
+        console.log(data);   // 👈 IMPORTANT
+
+        if (data.status === "success") {
+            if (data.role === "student") {
+                window.location.href = "/student-dashboard/";
+            } else {
+                window.location.href = "/faculty-dashboard/";
+            }
+        } else {
+            alert(data.error);
+        }
+    });
+}
+
+// CSRF helper
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let c of cookies) {
+            c = c.trim();
+            if (c.startsWith(name + '=')) {
+                cookieValue = decodeURIComponent(c.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+</script>
+
+
+</head>
+
+<body>
+
+<!-- BACK BUTTON -->
+<a href="/" class="back-btn">
+    ← Back
+</a>
+
+<!-- LOGIN CARD -->
+<div class="login-container">
+    <h2>Welcome Back</h2>
+    <div class="subtitle">Login to continue using CodeNest</div>
+
+    <form>
+        <label>Email / Username</label>
+        <input type="text" placeholder="Enter your email or username">
+
+        <label>Password</label>
+        <input type="password" placeholder="Enter your password">
+
+       <button type="button" onclick="handleLogin()">Login</button>
+
+    </form>
+
+    <div class="footer-text">
+        Don’t have an account?
+        <a href="/select-role/">Sign up</a>
+
+    </div>
+</div>
+
+</body>
+</html>
